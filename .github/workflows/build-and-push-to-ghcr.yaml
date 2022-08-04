@@ -25,15 +25,10 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
-        with:
-          repository: mattermost/mattermost-server
-          ref: 'v${{ inputs.version }}'
-          path: mattermost-server
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: "./mattermost-server/build"
           push: true
           platforms: linux/amd64,linux/arm64
+          build-args: MM_PACKAGE=https://releases.mattermost.com/${{ inputs.version }}/mattermost-${{ inputs.version }}-linux-amd64.tar.gz?src=docker
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
