@@ -35,4 +35,4 @@ jobs:
         with:
           context: "./mattermost-server/build"
           push: true
-          tags: ${{ REGISTRY }}/${{ IMAGE_NAME }}:${{ inputs.versionTag }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.versionTag }}
