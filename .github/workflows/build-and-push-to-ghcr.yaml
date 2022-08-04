@@ -1,0 +1,37 @@
+name: build-and-push-to-ghcr
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        default: '7.1.2'
+
+env:
+  IMAGE_NAME: ghcr.io/scottaubrey/mattermost-team-server
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          repository: https://github.com/mattermost/mattermost-server
+          ref: 'v${{ inputs.versionTag }}'
+          path: mattermost-server
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: "./mattermost-server/build"
+          push: true
+          tags: ${IMAGE_NAME}:${{ inputs.versionTag }}
