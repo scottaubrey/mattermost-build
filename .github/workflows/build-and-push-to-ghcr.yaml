@@ -35,4 +35,5 @@ jobs:
         with:
           context: "./mattermost-server/build"
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
