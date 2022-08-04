@@ -7,7 +7,8 @@ on:
         default: '7.1.2'
 
 env:
-  IMAGE_NAME: ghcr.io/scottaubrey/mattermost-team-server
+  REGISTRY: ghcr.io
+  IMAGE_NAME: scottaubrey/mattermost-team-server
 
 jobs:
   build-and-push:
@@ -34,4 +35,4 @@ jobs:
         with:
           context: "./mattermost-server/build"
           push: true
-          tags: ${IMAGE_NAME}:${{ inputs.versionTag }}
+          tags: ${{ REGISTRY }}/${{ IMAGE_NAME }}:${{ inputs.versionTag }}
