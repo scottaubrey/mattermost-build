@@ -28,11 +28,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: mattermost/mattermost-server
-          ref: 'v${{ inputs.versionTag }}'
+          ref: 'v${{ inputs.version }}'
           path: mattermost-server
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: "./mattermost-server/build"
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.versionTag }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
