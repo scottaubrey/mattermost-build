@@ -40,4 +40,4 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           build-args: VERSION=${{ inputs.version }}
-          tags: ${{ env.REGISTRY }}/{{ env.CURL_IMAGE_NAME }}:${{ inputs.version }}
+          tags: ${{ env.REGISTRY }}/${{ env.CURL_IMAGE_NAME }}:${{ inputs.version }}
