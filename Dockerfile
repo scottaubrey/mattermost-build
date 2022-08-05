@@ -10,7 +10,6 @@ ARG PGID=2000
 ARG VERSION="7.1.2"
 ARG MM_PACKAGE="https://releases.mattermost.com/${VERSION}/mattermost-${VERSION}-linux-${TARGETARCH}.tar.gz?src=docker"
 
-
 # Install some needed packages
 RUN apk add --no-cache \
   ca-certificates \
