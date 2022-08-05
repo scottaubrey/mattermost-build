@@ -9,6 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: scottaubrey/mattermost-team-server
+  CURL_IMAGE_NAME: scottaubrey/curl
 
 jobs:
   build-and-push:
@@ -25,10 +26,18 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push (mattermost)
         uses: docker/build-push-action@v3
         with:
           push: true
           platforms: linux/amd64,linux/arm64
           build-args: VERSION=${{ inputs.version }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
+      - name: Build and push (curl)
+        uses: docker/build-push-action@v3
+        with:
+          file: Dockerfile.curl
+          push: true
+          platforms: linux/amd64,linux/arm64
+          build-args: VERSION=${{ inputs.version }}
+          tags: ${{ env.REGISTRY }}/{{ env.CURL_IMAGE_NAME }}:${{ inputs.version }}
